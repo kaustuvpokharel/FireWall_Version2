@@ -1,0 +1,25 @@
+# ninja log v5
+264	969	1695487862093253641	CMakeFiles/NGFW.dir/main.cpp.o	7551a5df6b3ff82d
+5	264	1695487861386168000	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/NGFW_autogen/mocs_compilation.cpp	aa4b2783b95fb575
+0	278	1695487917488415124	FireWall2_autogen/timestamp	6531aff70f8ebbc0
+303	1131	1695486862599188739	CMakeFiles/NGFW.dir/packetcapturethread.cpp.o	f916884b9931f7a5
+803	875	1695486746099214902	NGFW.app/Contents/MacOS/NGFW	59bd22d0ef98b623
+5	264	1695487861386168000	NGFW_autogen/mocs_compilation.cpp	aa4b2783b95fb575
+5	264	1695487861386168000	NGFW_autogen/timestamp	aa4b2783b95fb575
+5	264	1695487861386168000	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/NGFW_autogen/timestamp	aa4b2783b95fb575
+0	278	1695487917488415124	FireWall2_autogen/mocs_compilation.cpp	6531aff70f8ebbc0
+264	982	1695487862106058349	CMakeFiles/NGFW.dir/NGFW_autogen/mocs_compilation.cpp.o	1048b7210e10262d
+0	278	1695487917488415124	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/FireWall2_autogen/mocs_compilation.cpp	6531aff70f8ebbc0
+279	989	1695487918200594280	CMakeFiles/FireWall2.dir/main.cpp.o	26ed706a885d2c94
+0	278	1695487917488415124	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/FireWall2_autogen/timestamp	6531aff70f8ebbc0
+278	1044	1695487918255718657	CMakeFiles/FireWall2.dir/mainwindow.cpp.o	79ad17756053e866
+0	121	1695488228411847679	build.ninja	f2a6f47209d2ee39
+278	801	1695487918012854450	CMakeFiles/FireWall2.dir/packetcapturethread.cpp.o	81ef4549ad356b38
+279	991	1695487918202100765	CMakeFiles/FireWall2.dir/FireWall2_autogen/mocs_compilation.cpp.o	b4ac6f90518cb5db
+1044	1123	1695487918337528523	FireWall2.app/Contents/MacOS/FireWall2	cd76e86eaf8c822e
+4	30	1695488245338409064	FireWall2_autogen/timestamp	6531aff70f8ebbc0
+4	30	1695488245338409064	FireWall2_autogen/mocs_compilation.cpp	6531aff70f8ebbc0
+4	30	1695488245338409064	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/FireWall2_autogen/timestamp	6531aff70f8ebbc0
+4	30	1695488245338409064	/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/FireWall2_autogen/mocs_compilation.cpp	6531aff70f8ebbc0
+32	721	1695488246024826929	CMakeFiles/FireWall2.dir/mainwindow.cpp.o	79ad17756053e866
+721	788	1695488246094606663	FireWall2.app/Contents/MacOS/FireWall2	cd76e86eaf8c822e

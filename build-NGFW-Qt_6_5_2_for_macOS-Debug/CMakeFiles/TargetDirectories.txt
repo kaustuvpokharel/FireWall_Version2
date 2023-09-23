@@ -1,0 +1,9 @@
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/FireWall2.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/edit_cache.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/list_install_components.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/install.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/install/local.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/install/strip.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/FireWall2_autogen_timestamp_deps.dir
+/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/CMakeFiles/FireWall2_autogen.dir
