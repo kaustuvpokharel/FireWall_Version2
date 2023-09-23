@@ -29,13 +29,13 @@
 			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake",
 			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake",
 			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6/Qt6Config.cmake",
-			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Core/Qt6CoreTargets.cmake",
-			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Core/Qt6CoreConfig.cmake",
+			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
+			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
 			"/Users/kaustuvpokharel/Qt/QTMAIN/Tools/CMake/CMake.app/Contents/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake",
 			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
 			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake",
-			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
-			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
+			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Core/Qt6CoreTargets.cmake",
+			"/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/cmake/Qt6Core/Qt6CoreConfig.cmake"
 		],
 		"nodes" : 
 		[
@@ -115,12 +115,6 @@
 				"parent" : 12
 			},
 			{
-				"command" : 5,
-				"file" : 0,
-				"line" : 550,
-				"parent" : 2
-			},
-			{
 				"command" : 7,
 				"file" : 3,
 				"line" : 40,
@@ -128,51 +122,57 @@
 			},
 			{
 				"file" : 9,
-				"parent" : 15
+				"parent" : 14
 			},
 			{
 				"command" : 10,
 				"file" : 9,
 				"line" : 39,
-				"parent" : 16
+				"parent" : 15
 			},
 			{
 				"command" : 9,
 				"file" : 8,
 				"line" : 111,
-				"parent" : 17
+				"parent" : 16
 			},
 			{
 				"command" : 8,
 				"file" : 7,
 				"line" : 47,
-				"parent" : 18
+				"parent" : 17
 			},
 			{
 				"file" : 6,
-				"parent" : 19
+				"parent" : 18
 			},
 			{
 				"command" : 7,
 				"file" : 6,
 				"line" : 52,
-				"parent" : 20
+				"parent" : 19
 			},
 			{
 				"file" : 5,
-				"parent" : 21
+				"parent" : 20
 			},
 			{
 				"command" : 6,
 				"file" : 5,
 				"line" : 62,
-				"parent" : 22
+				"parent" : 21
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 550,
+				"parent" : 2
 			},
 			{
 				"command" : 9,
 				"file" : 8,
 				"line" : 111,
-				"parent" : 17
+				"parent" : 16
 			},
 			{
 				"command" : 8,
@@ -217,12 +217,16 @@
 			"defines" : 
 			[
 				{
-					"backtrace" : 14,
+					"backtrace" : 23,
 					"define" : "QT_CORE_LIB"
 				},
 				{
 					"backtrace" : 6,
 					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_NETWORK_LIB"
 				},
 				{
 					"backtrace" : 6,
@@ -236,22 +240,22 @@
 					"path" : "/Users/kaustuvpokharel/Desktop/BellHacks/build-NGFW-Qt_6_5_2_for_macOS-Debug/FireWall2_autogen/include"
 				},
 				{
-					"backtrace" : 14,
+					"backtrace" : 23,
 					"isSystem" : true,
 					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtCore.framework/Headers"
 				},
 				{
-					"backtrace" : 14,
+					"backtrace" : 23,
 					"isSystem" : true,
 					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtCore.framework"
 				},
 				{
-					"backtrace" : 14,
+					"backtrace" : 23,
 					"isSystem" : true,
 					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/mkspecs/macx-clang"
 				},
 				{
-					"backtrace" : 14,
+					"backtrace" : 23,
 					"isSystem" : true,
 					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/include"
 				},
@@ -274,6 +278,16 @@
 					"backtrace" : 6,
 					"isSystem" : true,
 					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtGui.framework"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtNetwork.framework/Headers"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtNetwork.framework"
 				}
 			],
 			"language" : "CXX",
@@ -281,8 +295,8 @@
 			{
 				"backtraces" : 
 				[
-					14,
-					14
+					23,
+					23
 				],
 				"standard" : "17"
 			},
@@ -347,27 +361,17 @@
 			},
 			{
 				"backtrace" : 6,
+				"fragment" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
 				"fragment" : "-lpcap",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 13,
 				"fragment" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtGui.framework/Versions/A/QtGui",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 14,
-				"fragment" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtCore.framework/Versions/A/QtCore",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 23,
-				"fragment" : "-framework IOKit",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 23,
-				"fragment" : "-framework DiskArbitration",
 				"role" : "libraries"
 			},
 			{
@@ -379,18 +383,33 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 29,
+				"backtrace" : 22,
 				"fragment" : "-framework AppKit",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 29,
+				"backtrace" : 22,
 				"fragment" : "-framework ImageIO",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 29,
+				"backtrace" : 22,
 				"fragment" : "-framework Metal",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 23,
+				"fragment" : "/Users/kaustuvpokharel/Qt/QTMAIN/6.5.2/macos/lib/QtCore.framework/Versions/A/QtCore",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 29,
+				"fragment" : "-framework IOKit",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 29,
+				"fragment" : "-framework DiskArbitration",
 				"role" : "libraries"
 			}
 		],
