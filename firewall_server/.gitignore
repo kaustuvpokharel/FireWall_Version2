@@ -2,4 +2,5 @@
 .vs
 .vscode
 
+.pyc
 __PRIVATE_*
