@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), handle(nullptr), isCapturing(false), outputFile(nullptr)
     , ui(new Ui::MainWindow)
@@ -106,8 +108,8 @@ void MainWindow::stopCapture()
     captureThread->wait();
     captureThread->terminate(); // Terminate the thread
     captureThread->deleteLater(); // Delete the thread and free resources
-    captureThread = new PacketCaptureThread("", this); // Create a new thread
-    connect(captureThread, &PacketCaptureThread::packetCaptured, this, &MainWindow::packetHandler);
+//    captureThread = new PacketCaptureThread("", this); // Create a new thread
+//    connect(captureThread, &PacketCaptureThread::packetCaptured, this, &MainWindow::packetHandler);
 
     qDebug() << "Capture Thread is stopped";
 

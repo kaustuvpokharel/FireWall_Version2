@@ -21,6 +21,12 @@
 #include <QDateTime>           // For QDateTime
 #include <QString>
 
+#include <QTcpSocket>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QTextCursor>
+#include <QColor>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,6 +46,7 @@ private slots:
     void packetHandler(const struct pcap_pkthdr *header, const u_char *packetData);
     void saveToFile();
     void selectInterface(int index);
+    void sendPacketDataToPython(const QByteArray &packetData);
 private:
     Ui::MainWindow *ui;
     QPushButton *startButton;
