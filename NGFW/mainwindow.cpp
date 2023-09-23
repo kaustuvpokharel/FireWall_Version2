@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     outputText = ui->outputText;
     interfaceComboBox = ui->interfaceComboBox;
 
-    socket.connectToHost("192.168.207.148", 12345);
+    socket.connectToHost("192.168.88.148", 12345);
     connect(&socket, &QTcpSocket::connected, this, &MainWindow::socketConnected);
     connect(&socket, &QTcpSocket::disconnected, this, &MainWindow::socketDisconnected);
     connect(&socket, &QTcpSocket::errorOccurred, this, &MainWindow::socketError);

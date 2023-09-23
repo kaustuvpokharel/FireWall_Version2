@@ -31,16 +31,26 @@ public:
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *w;
+    QLabel *label_3;
+    QSpacerItem *horizontalSpacer;
+    QLabel *Y;
+    QLabel *label_4;
+    QSpacerItem *horizontalSpacer_2;
+    QLabel *R;
+    QLabel *label_5;
     QTextEdit *outputText;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
     QLabel *label;
     QLabel *label_2;
     QComboBox *interfaceComboBox;
+    QLabel *label_6;
+    QPushButton *startButton;
+    QPushButton *stopButton;
     QPushButton *saveButton;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *stopButton;
-    QPushButton *startButton;
     QSpacerItem *verticalSpacer_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -63,6 +73,65 @@ public:
         horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        w = new QLabel(centralwidget);
+        w->setObjectName("w");
+        w->setMaximumSize(QSize(46, 23));
+        w->setPixmap(QPixmap(QString::fromUtf8("../../../Documents/QT_learn/Firewall2/Resources/W.png")));
+        w->setScaledContents(true);
+
+        horizontalLayout_2->addWidget(w);
+
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName("label_3");
+        QFont font1;
+        font1.setFamilies({QString::fromUtf8("Poppins")});
+        font1.setPointSize(15);
+        label_3->setFont(font1);
+
+        horizontalLayout_2->addWidget(label_3);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+        Y = new QLabel(centralwidget);
+        Y->setObjectName("Y");
+        Y->setMaximumSize(QSize(46, 23));
+        Y->setPixmap(QPixmap(QString::fromUtf8("../../../Documents/QT_learn/Firewall2/Resources/Y.png")));
+        Y->setScaledContents(true);
+
+        horizontalLayout_2->addWidget(Y);
+
+        label_4 = new QLabel(centralwidget);
+        label_4->setObjectName("label_4");
+        label_4->setFont(font1);
+
+        horizontalLayout_2->addWidget(label_4);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_2);
+
+        R = new QLabel(centralwidget);
+        R->setObjectName("R");
+        R->setMaximumSize(QSize(46, 23));
+        R->setPixmap(QPixmap(QString::fromUtf8("../../../Documents/QT_learn/Firewall2/Resources/R.png")));
+        R->setScaledContents(true);
+
+        horizontalLayout_2->addWidget(R);
+
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName("label_5");
+        label_5->setFont(font1);
+        label_5->setScaledContents(false);
+
+        horizontalLayout_2->addWidget(label_5);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
+
         outputText = new QTextEdit(centralwidget);
         outputText->setObjectName("outputText");
 
@@ -91,18 +160,41 @@ public:
 
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
-        QFont font1;
-        font1.setFamilies({QString::fromUtf8("Al Bayan")});
-        font1.setPointSize(20);
-        font1.setBold(true);
-        label_2->setFont(font1);
+        QFont font2;
+        font2.setFamilies({QString::fromUtf8("Poppins")});
+        font2.setPointSize(18);
+        font2.setBold(true);
+        label_2->setFont(font2);
 
         verticalLayout_2->addWidget(label_2);
 
         interfaceComboBox = new QComboBox(centralwidget);
         interfaceComboBox->setObjectName("interfaceComboBox");
+        QFont font3;
+        font3.setFamilies({QString::fromUtf8("Poppins")});
+        interfaceComboBox->setFont(font3);
 
         verticalLayout_2->addWidget(interfaceComboBox);
+
+        label_6 = new QLabel(centralwidget);
+        label_6->setObjectName("label_6");
+
+        verticalLayout_2->addWidget(label_6);
+
+        startButton = new QPushButton(centralwidget);
+        startButton->setObjectName("startButton");
+        QFont font4;
+        font4.setFamilies({QString::fromUtf8("Poppins")});
+        font4.setPointSize(14);
+        startButton->setFont(font4);
+
+        verticalLayout_2->addWidget(startButton);
+
+        stopButton = new QPushButton(centralwidget);
+        stopButton->setObjectName("stopButton");
+        stopButton->setFont(font4);
+
+        verticalLayout_2->addWidget(stopButton);
 
         saveButton = new QPushButton(centralwidget);
         saveButton->setObjectName("saveButton");
@@ -113,16 +205,6 @@ public:
         horizontalLayout_4->setObjectName("horizontalLayout_4");
 
         verticalLayout_2->addLayout(horizontalLayout_4);
-
-        stopButton = new QPushButton(centralwidget);
-        stopButton->setObjectName("stopButton");
-
-        verticalLayout_2->addWidget(stopButton);
-
-        startButton = new QPushButton(centralwidget);
-        startButton->setObjectName("startButton");
-
-        verticalLayout_2->addWidget(startButton);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -148,11 +230,18 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "FIREWALL.2", nullptr));
+        w->setText(QString());
+        label_3->setText(QCoreApplication::translate("MainWindow", "Safe", nullptr));
+        Y->setText(QString());
+        label_4->setText(QCoreApplication::translate("MainWindow", "Flag", nullptr));
+        R->setText(QString());
+        label_5->setText(QCoreApplication::translate("MainWindow", "Unsafe", nullptr));
         label->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "Select your Network Interface:", nullptr));
-        saveButton->setText(QCoreApplication::translate("MainWindow", "Save To File", nullptr));
-        stopButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
+        label_6->setText(QString());
         startButton->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
+        stopButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
+        saveButton->setText(QCoreApplication::translate("MainWindow", "Save To File", nullptr));
     } // retranslateUi
 
 };
