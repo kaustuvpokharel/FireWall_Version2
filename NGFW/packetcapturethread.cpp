@@ -1,4 +1,3 @@
-
 #include "packetcapturethread.h"
 
 class PacketCaptureThreadData : public QSharedData
