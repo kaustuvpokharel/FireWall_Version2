@@ -34,6 +34,7 @@ public:
     QTextEdit *outputText;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
+    QLabel *label;
     QLabel *label_2;
     QComboBox *interfaceComboBox;
     QPushButton *saveButton;
@@ -75,6 +76,18 @@ public:
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer);
+
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setMaximumSize(QSize(300, 300));
+        label->setPixmap(QPixmap(QString::fromUtf8("../../../Documents/QT_learn/Firewall2/Resources/logo.png")));
+        label->setScaledContents(true);
+        label->setAlignment(Qt::AlignCenter);
+        label->setWordWrap(false);
+        label->setOpenExternalLinks(false);
+        label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+
+        verticalLayout_2->addWidget(label);
 
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
@@ -135,6 +148,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "FIREWALL.2", nullptr));
+        label->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "Select your Network Interface:", nullptr));
         saveButton->setText(QCoreApplication::translate("MainWindow", "Save To File", nullptr));
         stopButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
