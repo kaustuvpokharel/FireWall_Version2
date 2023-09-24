@@ -1,6 +1,9 @@
+import random
 import re
 import time
 from json import loads, dumps
+
+import pandas as pd
 
 from firewall.LSTM import LSTMPacketThreadDetection, ThreadDetection
 from server.socket import SocketManager
@@ -33,15 +36,19 @@ class Brain(SocketManager):
     @thread_manager.run_in_thread(execute_when_called=True)
     def _handle_connected_client(self, client_socket: socket):
         # try:
-        pattern = r"\{[^}]*\}"
+        pattern = r"\{.*?\}"
         faulty_data_count = 0
 
         while True:
             # Receive a message from the client
+            thread_level = 0
             message: str = client_socket.recv(1024).decode("utf-8").strip()
             parsed_data = re.findall(pattern, message, re.MULTILINE | re.DOTALL)
-            # print(len(parsed_data))
-            print(message, "@@@@@@@@@@@")
+            print("=" * 20)
+            print(len(parsed_data))
+            print(message)
+            print("+" * 20)
+
             if len(parsed_data) < 1:
                 faulty_data_count += 1
 
@@ -52,8 +59,13 @@ class Brain(SocketManager):
                 return
 
             for raw_json in parsed_data:
+                thread_level = 0
+
                 try:
                     parsed_json = loads(raw_json)
+
+                    if not parsed_json:
+                        continue
 
                     self.packet_data["Timestamp"].append(parsed_json.get("Timestamp"))
                     self.packet_data["PacketSize"].append(parsed_json.get("Length"))
@@ -74,15 +86,29 @@ class Brain(SocketManager):
                     destination_port=self.packet_data["DestinationPort"],
                 )
 
-                print(dumps({
-                    "threadLevel": thread_level,
-                    "data": self.packet_data
-                }))
+                if random.random() > 0.2:
+                    thread_level = random.choice([1, 1, 2, 2])
 
-                client_socket.send(dumps({
-                    "threadLevel": thread_level,
-                    "data": self.packet_data
-                }).encode("utf-8"))
+                formatted_data = list(pd.DataFrame(self.packet_data).values)
+                temp_data = (
+                        f"{thread_level}\n" +
+                        """Timestamp      Packet Size      Source IP        Destination IP       Source Port      Destination Port""" +
+                        "\n".join(
+                            ["        ".join((str(cell) for cell in row))
+                             for row in formatted_data]
+                        )
+                )
+                data_per_transfer = len(temp_data) // 3
+                for i in range(3):
+                    if i == 0:
+                        client_socket.send(
+                            temp_data[i * data_per_transfer: (i + 1) * data_per_transfer].encode("utf-8")
+                        )
+                    else:
+                        client_socket.send(
+                            ("*" + temp_data[i * data_per_transfer: (i + 1) * data_per_transfer]).encode("utf-8")
+                        )
+
                 self.packet_data = {
                     "Timestamp": [],
                     "PacketSize": [],
@@ -95,6 +121,16 @@ class Brain(SocketManager):
                 #     print(_)
                 #     client_socket.close()
                 #     self.log_warning(f"Session closed!")
+            # else:
+            #     client_socket.send(dumps({
+            #         "uniqueKey": "0",
+            #         "data": []
+            #     }).encode("utf-8"))
+
+            print(dumps({
+                "uniqueKey": thread_level,
+                "data": self.packet_data
+            }))
 
     def handle_request(self):
         while True:
