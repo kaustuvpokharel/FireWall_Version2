@@ -2,15 +2,43 @@ import random
 import re
 import time
 from json import loads, dumps
-
 import pandas as pd
-
 from firewall.LSTM import LSTMPacketThreadDetection, ThreadDetection
 from server.socket import SocketManager
 from thread_management import thread_manager
 
 
 class Brain(SocketManager):
+    """
+    Brain Class
+
+    The Brain class manages socket connections, receives data packets from clients, and handles client requests.
+
+    Args:
+        server_ip (str): The IP address of the server.
+        server_port (int): The port number for the server.
+        display_logs (bool, optional): Whether to display logs (default is False).
+        packet_per_batch (int, optional): The number of packets to collect before processing (default is 100).
+        thread_detector (ThreadDetection | None, optional): An instance of ThreadDetection for packet thread detection
+            (default is None, which initializes an LSTMPacketThreadDetection instance).
+
+    Attributes:
+        packet_per_batch (int): The number of packets to collect before processing.
+        packet_data (dict): A dictionary to store packet data including timestamps, packet sizes, source IPs,
+            destination IPs, source ports, and destination ports.
+        thread_detector (ThreadDetection): An instance of ThreadDetection for packet thread detection.
+
+    Methods:
+        - _handle_connected_client(client_socket: socket): Handles communication with a connected client.
+        - handle_request(): Continuously handles client requests.
+
+    Usage:
+    ```python
+    brain = Brain(server_ip='127.0.0.1', server_port=8080, display_logs=True)
+    brain.handle_request()
+    ```
+    """
+
     def __init__(
             self,
             server_ip: str,
@@ -19,6 +47,17 @@ class Brain(SocketManager):
             packet_per_batch: int = 100,
             thread_detector: ThreadDetection | None = None
     ):
+        """
+        Initialize a Brain instance.
+
+        Args:
+            server_ip (str): The IP address of the server.
+            server_port (int): The port number for the server.
+            display_logs (bool, optional): Whether to display logs (default is False).
+            packet_per_batch (int, optional): The number of packets to collect before processing (default is 100).
+            thread_detector (ThreadDetection | None, optional): An instance of ThreadDetection for packet thread detection
+                (default is None, which initializes an LSTMPacketThreadDetection instance).
+        """
         super().__init__(server_ip, server_port, display_logs)
 
         self.packet_per_batch = packet_per_batch
@@ -35,6 +74,12 @@ class Brain(SocketManager):
 
     @thread_manager.run_in_thread(execute_when_called=True)
     def _handle_connected_client(self, client_socket: socket):
+        """
+        Handle communication with a connected client.
+
+        Args:
+            client_socket (socket): The socket object for the connected client.
+        """
         # try:
         pattern = r"\{.*?\}"
         faulty_data_count = 0
@@ -129,6 +174,9 @@ class Brain(SocketManager):
             }))
 
     def handle_request(self):
+        """
+        Continuously handles client requests.
+        """
         while True:
             for client_socket, client_ip in self.clients:
                 if client_ip not in self.active_clients:
