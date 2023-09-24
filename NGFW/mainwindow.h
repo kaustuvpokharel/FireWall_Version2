@@ -26,6 +26,9 @@
 #include <QJsonDocument>
 #include <QTextCursor>
 #include <QColor>
+#include <QTextCharFormat>
+#include <QByteArray>
+#include <QScrollBar>
 
 
 QT_BEGIN_NAMESPACE
@@ -43,10 +46,14 @@ public:
 private slots:
     void startCapture();
     void stopCapture();
-    void packetHandler(const struct pcap_pkthdr *header, const u_char *packetData);
+//    void packetHandler(const struct pcap_pkthdr *header, const u_char *packetData);
     void saveToFile();
     void selectInterface(int index);
-    void sendPacketDataToPython(const QByteArray &packetData);
+//    void sendPacketDataToPython(const QByteArray &packetData);
+
+    void socketConnected();
+    void socketDisconnected();
+    void socketError(QAbstractSocket::SocketError error);
 private:
     Ui::MainWindow *ui;
     QPushButton *startButton;
@@ -64,6 +71,12 @@ private:
 
 
     static void packetHandlerCallback(u_char *userData, const struct pcap_pkthdr *header, const u_char *packetData);
+
+    //for socket
+    void sendPacketDataToServer(const QByteArray &packetData);
+    void packetHandler(const struct pcap_pkthdr *header, const u_char *packetData);
+
+    QTcpSocket socket;
 };
 
 #endif // MAINWINDOW_H

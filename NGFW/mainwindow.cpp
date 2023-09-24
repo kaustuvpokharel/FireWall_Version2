@@ -16,6 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
     outputText = ui->outputText;
     interfaceComboBox = ui->interfaceComboBox;
 
+    socket.connectToHost("192.168.88.148", 12345);
+    connect(&socket, &QTcpSocket::connected, this, &MainWindow::socketConnected);
+    connect(&socket, &QTcpSocket::disconnected, this, &MainWindow::socketDisconnected);
+    connect(&socket, &QTcpSocket::errorOccurred, this, &MainWindow::socketError);
+
     connect(startButton, &QPushButton::clicked, this, &MainWindow::startCapture);
     connect(stopButton, &QPushButton::clicked, this, &MainWindow::stopCapture);
     connect(saveButton, &QPushButton::clicked, this, &MainWindow::saveToFile);
@@ -43,6 +48,16 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::sendPacketDataToServer(const QByteArray &packetData) {
+    if (socket.state() == QAbstractSocket::ConnectedState) {
+        socket.write(packetData);
+        socket.waitForBytesWritten();
+    } else {
+        outputText->append("Failed to connect to your friend's server.");
+    }
+}
+
 
 void MainWindow::startCapture()
 {
@@ -124,8 +139,9 @@ void MainWindow::stopCapture()
     handle = nullptr;
 }
 
-void MainWindow::packetHandler(const struct pcap_pkthdr *header, const u_char *packetData)
-{
+void MainWindow::packetHandler(const struct pcap_pkthdr *header, const u_char *packetData) {
+    // ... Your existing packet handling logic ...
+
     // Extract Ethernet header information
     const struct ether_header *ethHeader = reinterpret_cast<const struct ether_header*>(packetData);
 
@@ -155,21 +171,24 @@ void MainWindow::packetHandler(const struct pcap_pkthdr *header, const u_char *p
             tcpHeader = reinterpret_cast<const struct tcphdr*>(packetData + sizeof(struct ether_header) + (ipHeader->ip_hl << 2));
         }
 
-        // Format the packet information
-        QString packetInfo =
-            QString("Source IP:\t%1\t\tDestination IP:\t%2\n")
-                .arg(sourceIp)
-                .arg(destIp)
-            + QString("Source Port:\t%1\t\tDestination Port:\t%2\n")
-                  .arg(tcpHeader ? ntohs(tcpHeader->th_sport) : 0)
-                  .arg(tcpHeader ? ntohs(tcpHeader->th_dport) : 0)
-            + QString("Timestamp:\t%1\t\tLength:\t%2\n")
-                  .arg(timestamp.toString("yyyy-MM-dd hh:mm:ss"))
-                  .arg(length)
-            + "===============================================================================\n";
+        QJsonObject packetInfo;
+        packetInfo["SourceIP"] = sourceIp;
+        packetInfo["DestinationIP"] = destIp;
+        packetInfo["SourcePort"] = tcpHeader ? ntohs(tcpHeader->th_sport) : 0;
+        packetInfo["DestinationPort"] = tcpHeader ? ntohs(tcpHeader->th_dport) : 0;
+        packetInfo["Timestamp"] = timestamp.toString("yyyy-MM-dd hh:mm:ss");
+        packetInfo["Length"] = length;
 
-        // Output the formatted packet information
-        outputText->append(packetInfo);
+        // Convert the JSON object to a string
+        QJsonDocument packetDoc(packetInfo);
+        QString packetJsonString = packetDoc.toJson();
+
+        // Convert the QString to a QByteArray using toUtf8
+        QByteArray packetDataByteArray = packetJsonString.toUtf8();
+
+        // Send the QByteArray to your friend's server
+        sendPacketDataToServer(packetDataByteArray);
+        qDebug() << "Packet JSON String: " << packetJsonString;
     }
 }
 
@@ -207,4 +226,19 @@ void MainWindow::packetHandlerCallback(u_char *userData, const struct pcap_pkthd
 void MainWindow::selectInterface(int index)
 {
 
+}
+
+void MainWindow::socketConnected()
+{
+    qDebug() << "Connected to the server.";
+}
+
+void MainWindow::socketDisconnected()
+{
+    qDebug() << "Disconnected from the server.";
+}
+
+void MainWindow::socketError(QAbstractSocket::SocketError error)
+{
+    qDebug() << "Socket error occurred:" << socket.errorString();
 }
