@@ -1,11 +1,10 @@
-import time
 import re
+import time
+from json import loads, dumps
 
 from firewall.LSTM import LSTMPacketThreadDetection, ThreadDetection
 from server.socket import SocketManager
 from thread_management import thread_manager
-from json import loads, dumps
-import pandas as pd
 
 
 class Brain(SocketManager):
@@ -14,7 +13,7 @@ class Brain(SocketManager):
             server_ip: str,
             server_port: int,
             display_logs: bool = False,
-            packet_per_batch: int = 1000,
+            packet_per_batch: int = 10,
             thread_detector: ThreadDetection | None = None
     ):
         super().__init__(server_ip, server_port, display_logs)
@@ -43,16 +42,16 @@ class Brain(SocketManager):
                 parsed_data = re.findall(pattern, message, re.MULTILINE | re.DOTALL)
                 print(len(parsed_data))
 
+                if len(parsed_data) < 1:
+                    faulty_data_count += 1
+
+                if faulty_data_count > 5:
+                    client_socket.close()
+                    return
+
                 for raw_json in parsed_data:
                     try:
                         parsed_json = loads(raw_json)
-
-                        if len(parsed_json) < 1:
-                            faulty_data_count += 1
-
-                            if faulty_data_count > 5:
-                                client_socket.close()
-                                return
 
                         self.packet_data["Timestamp"].append(parsed_json.get("Timestamp"))
                         self.packet_data["PacketSize"].append(parsed_json.get("PacketSize"))

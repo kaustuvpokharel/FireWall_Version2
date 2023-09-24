@@ -1,5 +1,4 @@
 import socket
-import time
 
 from thread_management import thread_manager
 from utils.logging import LoggerMixIn

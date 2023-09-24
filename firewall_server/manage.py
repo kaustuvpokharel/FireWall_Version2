@@ -1,7 +1,5 @@
 from server import Brain
 
-# from firewall import LSTM
-
 if __name__ == "__main__":
     brain = Brain("192.168.88.148", 12345, display_logs=True)
     brain.accept_requests()
