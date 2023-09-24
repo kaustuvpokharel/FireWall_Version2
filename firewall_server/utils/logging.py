@@ -8,3 +8,6 @@ class LoggerMixIn:
 
     def log_msg(self, msg: str):
         self._log("*", msg)
+
+    def log_warning(self, msg: str):
+        self._log("!", msg)

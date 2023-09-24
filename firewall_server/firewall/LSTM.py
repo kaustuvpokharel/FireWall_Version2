@@ -7,81 +7,99 @@ import pandas as pd
 from keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 
-seq_length = 10
+
+class ThreadDetection:
+    pass
 
 
-def preprocess_input(input_data):
-    # Convert timestamp to seconds since the start time
-    start_time = datetime.strptime("2023-01-01", "%Y-%m-%d")
-    input_data['Timestamp'] = (input_data['Timestamp'] - start_time).dt.total_seconds()
+class LSTMPacketThreadDetection(ThreadDetection):
+    def __init__(
+            self,
+            model_path: Path | str = None,
+            seq_length: int = 10,
+            mean: list[float] = None,
+            scale: list[float] = None,
+            min_data_len: int = 20,
+            flagged_threshold: float = 0.7,
+            unsafe_threshold: float = 0.9
+    ):
+        if min_data_len <= seq_length:
+            raise ValueError("min_data_len must be greater than seq_length")
 
-    # Standardize other features
-    input_features = ["PacketSize", "SourcePort", "DestinationPort"]
-    input_data[input_features] = scaler.transform(input_data[input_features])
+        self.model = load_model(
+            model_path or
+            Path(
+                os.path.dirname(os.path.abspath(__file__)),
+                "pre_trained_models",
+                "LSTM.keras"
+            )
+        )
+        self.seq_length = seq_length
+        self.flagged_threshold = flagged_threshold
+        self.unsafe_threshold = unsafe_threshold
 
-    return input_data[input_features].values
+        self.scaler = StandardScaler()
+        self.scaler.mean_ = mean or [-3.4638958368304884e-17, 6.52811138479592e-17, -4.618527782440651e-17]
+        self.scaler.scale_ = scale or [0.9999999999999984, 1.0000000000000018, 0.9999999999999999]
 
+    def preprocess_input(self, input_data):
+        # Convert timestamp to seconds since the start time
+        start_time = datetime.strptime("2023-01-01", "%Y-%m-%d")
+        input_data['Timestamp'] = (input_data['Timestamp'] - start_time).dt.total_seconds()
 
-def test_sequence(input_data, model):
-    input_data = preprocess_input(input_data)
+        # Standardize other features
+        input_features = ["PacketSize", "SourcePort", "DestinationPort"]
+        input_data[input_features] = self.scaler.transform(input_data[input_features])
 
-    # Check if there are enough data points for prediction
-    if len(input_data) < seq_length:
-        return "Insufficient data for prediction"
+        return input_data[input_features].values
 
-    X_input_seq = []
+    def _get_traffic_rating(self, input_data):
+        input_data = self.preprocess_input(input_data)
 
-    # Create input sequences for the LSTM model
-    for i in range(seq_length, len(input_data)):
-        X_input_seq.append(input_data[i - seq_length:i])
+        # Check if there are enough data points for prediction
+        if len(input_data) < self.seq_length:
+            return "Insufficient data for prediction"
 
-    X_input_seq = np.array(X_input_seq)
+        x_input_seq = []
 
-    # Make predictions
-    predictions = model.predict(X_input_seq)
+        # Create input sequences for the LSTM model
+        for i in range(self.seq_length, len(input_data)):
+            x_input_seq.append(input_data[i - self.seq_length:i])
 
-    # Calculate the average prediction (you can use a different method based on your problem)
-    avg_prediction = np.mean(predictions)
+        x_input_seq = np.array(x_input_seq)
 
-    # Define a threshold for classifying the sequence as malicious or not
-    threshold = 0.5
+        # Make predictions
+        predictions = self.model.predict(x_input_seq)
 
-    if avg_prediction >= threshold:
-        return "Malicious"
-    else:
-        return "Not Malicious"
+        # Calculate the average prediction (you can use a different method based on your problem)
+        avg_prediction = np.mean(predictions)
 
+        if avg_prediction >= self.unsafe_threshold:
+            return 2
+        elif avg_prediction >= self.flagged_threshold:
+            return 1
+        else:
+            return 0
 
-# Example usage:
-# Load the trained model and scaler
-model = load_model(Path(os.path.dirname(os.path.abspath(__file__)), "pre_trained_models", "LSTM.keras"))
+    def predict(
+            self,
+            timestamps: list[str],
+            packet_sizes: list[int],
+            source_ip: list[str],
+            destination_ip: list[str],
+            source_port: list[int],
+            destination_port: list[int]
+    ):
+        input_sequence = pd.DataFrame({
+            "Timestamp": pd.to_datetime(timestamps),
+            "PacketSize": packet_sizes,
+            "SourceIP": source_ip,
+            "DestinationIP": destination_ip,
+            "SourcePort": source_port,
+            "DestinationPort": destination_port
+        })
 
-scaler = StandardScaler()
-scaler.mean_ = np.array([-3.4638958368304884e-17, 6.52811138479592e-17, -4.618527782440651e-17])
-scaler.scale_ = np.array([0.9999999999999984, 1.0000000000000018, 0.9999999999999999])
+        result = self._get_traffic_rating(input_sequence)
+        print(f"Is Malicious: {result}")
 
-# Create an example input data (sequence) with 20 data points
-input_sequence = pd.DataFrame({
-    "Timestamp": pd.to_datetime([
-                                    "2023-01-01 01:00:00", "2023-01-01 01:01:00", "2023-01-01 01:02:00",
-                                    "2023-01-01 01:03:00",
-                                    "2023-01-01 01:04:00", "2023-01-01 01:05:00", "2023-01-01 01:06:00",
-                                    "2023-01-01 01:07:00",
-                                    "2023-01-01 01:08:00", "2023-01-01 01:09:00", "2023-01-01 01:10:00",
-                                    "2023-01-01 01:11:00",
-                                    "2023-01-01 01:12:00", "2023-01-01 01:13:00", "2023-01-01 01:14:00",
-                                    "2023-01-01 01:15:00",
-                                    "2023-01-01 01:16:00", "2023-01-01 01:17:00", "2023-01-01 01:18:00",
-                                    "2023-01-01 01:19:00",
-                                ] * 50),
-    "PacketSize": [1500, 1600, 1700, 1550, 1650, 1750, 1600, 1500, 1550, 1700, 1750, 1600, 1650, 1500, 1700, 1750, 1550,
-                   1600, 1650, 1500] * 50,
-    "SourceIP": ["192.168.0.1"] * 1000,
-    "DestinationIP": ["10.0.0.2"] * 1000,
-    "SourcePort": [5000] * 1000,
-    "DestinationPort": [80] * 1000
-})
-
-# Test the input sequence
-result = test_sequence(input_sequence, model)
-print(f"Sequence Classification: {result}")
+        return result
