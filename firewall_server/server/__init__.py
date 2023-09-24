@@ -44,10 +44,6 @@ class Brain(SocketManager):
             thread_level = 0
             message: str = client_socket.recv(1024).decode("utf-8").strip()
             parsed_data = re.findall(pattern, message, re.MULTILINE | re.DOTALL)
-            print("=" * 20)
-            print(len(parsed_data))
-            print(message)
-            print("+" * 20)
 
             if len(parsed_data) < 1:
                 faulty_data_count += 1
